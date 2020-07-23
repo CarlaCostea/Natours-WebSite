@@ -1,0 +1,129 @@
+.popup {
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: $color-black-slightly-transparent;
+    z-index: 4000;
+
+    //hide it
+    opacity: 0;
+    visibility: hidden;
+
+    transition: all .3s;
+
+    @supports (-webkit-backdrop-filter: blur(10px)) or (backdrop-filter: blur(10px)) {
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+        background-color: rgba($color-black, .3)
+    }
+
+    &:target {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    &:target &__content {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    &__close {
+        &:link,
+        &:visited {
+            color: $color-grey-dark;
+            position: absolute;
+            top: 2.5rem;
+            right: 2.5rem;
+            font-size: 3rem;
+            text-decoration: none;
+            display: inline-block;
+            transition: all .2s;
+            line-height: 1; // ?
+        }
+
+        &:hover {
+            color: $color-primary;
+        }
+    }
+
+    &__content {
+        width: 75%;
+        background-color: $color-white;
+        box-shadow: 0 2rem 4rem $color-black-slightly-transparent;
+        @include centerhv;
+        border-radius: 3px;
+        //we use display table so the browser automatically gives the element the same height
+        display: table;
+
+        //the img is overlaping the border radius so we use overflow
+        overflow: hidden;
+
+        //when we need 2 transform we need to repeat the first in the second
+        transform: translate(-50%, -50%) scale(.5);
+        transition: all .4s .2s;
+
+        @include respond(tab-port) {
+            width: 100%;
+            height: 30vh;
+        }
+
+        @include respond(phone) {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    &__left {
+        width: 33.33333333%;
+        display: table-cell;
+
+        // @include respond(tab-port) {
+        //     display: run-in;
+        // }
+
+        @include respond(phone) {
+            display: none;
+        }
+    }
+
+    &__right {
+        width: 66.666666667%;
+        display: table-cell;
+        vertical-align: middle;
+        padding: 3rem 5rem;
+        
+        @include respond(phone) {
+            padding: 1rem 3rem;
+            width: 100%;
+            
+        }
+    }
+
+    &__img {
+        display: block;
+        width: 100%;
+    }
+
+    &__text {
+        font-size: 1.4rem;
+        margin-bottom: 4rem;
+
+        @include respond(phone) {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            padding: 1rem 2rem;
+        }
+        //columns
+        column-count: 2;
+        column-gap: 4rem;
+        column-rule: 1px solid $color-grey-dark-3;
+
+        //for hypens you must specify language in html 
+        -moz-hyphens: auto;
+        -ms-hyphens: auto;
+        -webkit-hyphens: auto;
+        hyphens: auto;
+    }
+}
